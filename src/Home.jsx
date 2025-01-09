@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
+import DetailPage from "./DetailPage";
+
 function Home({blog,setBlog}){
-    const handleDelete=(id)=>{
-        setBlog((blog)=>blog.filter((b)=>b.id !==id))
-    };
+ 
     return(
       <>
         <div>
-          {blog.map((b)=>(
-            <div  key={b.id}>
-            <h3><Link to="/detail">{b.title}</Link></h3>
+          {blog.map((blg)=>(
+            <div  key={blg.id}>
+            <h3>
+              <Link to="/detail" state={{id:blg.id}}>{blg.title}</Link>
+            </h3>
             </div>
           ))}
         </div>
@@ -16,8 +18,5 @@ function Home({blog,setBlog}){
     ) 
   }
  
-    
-
- 
-
+  
   export default Home;
