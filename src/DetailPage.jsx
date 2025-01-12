@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import {useNavigate,useLocation} from 'react-router-dom'
+import './App.css';
 
 function DetailPage({blog,setBlog}){
     const handleDelete=(id)=>{
@@ -25,9 +26,9 @@ function DetailPage({blog,setBlog}){
     }
     return(
       <>
-        <div>
+        <div className>
            
-              <div key={blogDetails.id}>
+              <div  className="details" key={blogDetails.id}>
                 <h3>{blogDetails.id}. {blogDetails.title}</h3>
                 <p>Author: {blogDetails.author}</p>
                 <p>Date: {blogDetails.date}</p>
