@@ -2,6 +2,7 @@ import './App.css'
 import { Route, Routes, useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import Home from './Home';
+import AddBlog from './AddBlog';
 
 
 
@@ -25,6 +26,10 @@ function App() {
         <Route path="/home/*"
           element={<Home/>}
         />
+
+        {/* <Route path='/add'
+          element={<AddBlog/>}
+        /> */}
       </Routes>
       </>
   )
