@@ -1,24 +1,36 @@
-import {useNavigate } from "react-router-dom";
-// import DetailPage from "./DetailPage";
-import './App.css';
+import { useState } from 'react'
+import './App.css'
+import { Route, Routes, useNavigate} from 'react-router-dom'
+import List from './List'
+import AddBlog from './AddBlog'
+import DetailPage from './DetailPage'
 
-
-function Home({ blog, setBlog }) {
-const navigate=useNavigate();
-  return (
-    <>
-      <div className="list">
-        {blog.map((blg) => (
-          <div className="card" onClick={()=>navigate("/detail", {state:{id:blg.id}})} key={blg.id}>
-            <h3> {blg.title}</h3>
-            <h3>{blg.author} </h3>
-            <h3>{blg.date}</h3>
-          </div>
-        ))}
+function Home(){
+    const [blog,setBlog]=useState([]);
+    const navigate=useNavigate();
+    return(
+        <>
+        <div className='main'>
+        <span></span>
+        <h1 className='header'>Blog App</h1>
+        <button className='addBlog' onClick={()=>navigate("/home/add")}>Add Blog</button>
       </div>
-    </>
-  )
-}
+      <Routes>
+        
+        <Route path="/"
+          element={<List blog={blog} setBlog={setBlog}/>}/>
 
+        <Route path="/add"
+          element={<AddBlog setBlog={setBlog} blog={blog}/>}
+        />
+
+        <Route path="/detail"
+          element={<DetailPage setBlog={setBlog} blog={blog}/>}
+          />
+      </Routes>
+        
+        </>
+    )
+}
 
 export default Home;

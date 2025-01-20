@@ -5,7 +5,7 @@ import './App.css';
 function DetailPage({blog,setBlog}){
     const handleDelete=(id)=>{
         setBlog((blog)=>blog.filter((b)=>b.id !==id));
-        navigate('/')
+        navigate('/home')
     };
 
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ function DetailPage({blog,setBlog}){
       return (
         <div>
           <p>Blog Not Found</p>
-          <button onClick={() => navigate("/")}>Go Back</button>
+          <button onClick={() => navigate("/home")}>Go Back</button>
         </div>
       );
     }
@@ -41,7 +41,7 @@ function DetailPage({blog,setBlog}){
                 <br />
                 <br />
                 <button onClick={
-                  ()=>navigate("/")
+                  ()=>navigate("/home")
                   }>Hide</button>
             </div>
         </div>

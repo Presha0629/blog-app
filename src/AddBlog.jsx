@@ -12,6 +12,7 @@ function AddBlog({setBlog,blog}){
     
   
     return(
+        
         <div className='form'>
         Title:<input type="text" onChange={
           (e)=>(setInputTitle(e.target.value))
@@ -53,7 +54,7 @@ function AddBlog({setBlog,blog}){
             }
           
           setBlog([...blog,newBlog])
-          navigate("/"); 
+          navigate("/home"); 
       }}>Submit</button>
     
         </div>
