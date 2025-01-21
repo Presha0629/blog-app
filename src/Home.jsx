@@ -1,18 +1,22 @@
 import { useState } from 'react'
 import './App.css'
-import { Route, Routes, useNavigate} from 'react-router-dom'
+import { Route, Routes, useNavigate,useLocation} from 'react-router-dom'
 import List from './List'
 import AddBlog from './AddBlog'
 import DetailPage from './DetailPage'
-import Login from './App'
+// import SignUp from './App'
 
 function Home(){
     const [blog,setBlog]=useState([]);
     const navigate=useNavigate();
+    const location=useLocation();
+    const {signUname}=location.state || {};
+    console.log(signUname || "No username passed");
     return(
         <>
         <div className='main'>
         <span></span>
+        <h3>{signUname}</h3>
         <h1 className='header'>Blog App</h1>
         <button className='addBlog' onClick={()=>navigate("/home/add")}>Add Blog</button>
         <button onClick={()=>navigate("/")}>Logout</button>

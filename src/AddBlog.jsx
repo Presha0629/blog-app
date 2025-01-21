@@ -52,9 +52,26 @@ function AddBlog({setBlog,blog}){
               "content":inputContent,
               "tags":inputTags
             }
-          
-          setBlog([...blog,newBlog])
-          navigate("/home"); 
+            console.log("newBlog:", newBlog, "Type:", typeof newBlog);
+            if (typeof newBlog === "object" && newBlog !== null) {
+              let hasEmptyField = false;
+
+              Object.entries(newBlog).forEach(([key, value]) => {
+                if (!value) {
+                  alert(`The field '${key}' is empty.`);
+                  hasEmptyField = true;
+                  // navigate("/add");
+                }});
+
+                if (hasEmptyField) {
+                  navigate("/home/add");
+                  return;
+                }
+              setBlog([...blog, newBlog]);
+              navigate("/home");
+              
+            }
+           
       }}>Submit</button>
     
         </div>

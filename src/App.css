@@ -54,23 +54,37 @@ button{
     height: fit-content;
     width: fit-content;
     border: 4px solid black;
+    justify-content: center;
 
 }
 
 .loginform{
-    margin: 2px 2px 2px 2px;
+    margin: 4px 4px 4px 4px;
 }
 
 
 
-/* .formlabel{
-    display: flex;
-    width: fit-content;
+.formlabel{
+    margin: 2px;
     
 
-} */
+}
+
+.detailsdiv{
+    display: flex;
+    justify-content: center;        
+}
 
 
+.formbutton{
+    margin: 4px;
+}
 
+.loginpage{
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+}
 
 

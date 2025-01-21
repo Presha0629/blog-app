@@ -38,32 +38,33 @@ function Login(){
   }
   return(
     <>
-        <div>
+        <div className='loginpage'>
           <h3>Login Page</h3>
 
         <div className='logindiv'>
           <form action=""  className='loginform' >
             <div className='formlabel'>
-              <label htmlFor="UserName">UserName</label>
-              <input type="text" name='UserName' value={uname} onChange={
+              <input placeholder="Username" type="text" name='UserName' value={uname} onChange={
                 (e)=>(setUname(e.target.value))
                 } 
                         />
             </div>
 
             <div className='formlabel'>
-              <label htmlFor="Password">Password</label>
-              <input type="password" name='Password' value={pswd} onChange={(e)=>(setPswd(e.target.value))} />
+              <input placeholder="Password" type="password" name='Password' value={pswd} onChange={(e)=>(setPswd(e.target.value))} />
             </div>
             
-            <button type='submit' onClick=
-            {
-              ()=> {
-                if( uname===credential.Username && pswd===credential.Password)
-                    navigate("/home");
-                
-              }}>Login</button>
-            <button onClick={()=> navigate("/signup")}>Sign up</button>
+            <button type='submit' className='formbutton' onClick=
+              {
+                ()=> {
+                  if( uname===credential.Username && pswd===credential.Password)
+                      navigate("/home");
+                  
+                }}>Login</button>
+            <button className='formbutton' onClick=
+              {
+                ()=> navigate("/signup")
+                }>Sign up</button>
             <a>Forgot Password</a>
           </form>
         </div>
@@ -95,12 +96,17 @@ function SignUp(){
         <input type="password" name='ConfirmPswd' value={cpswd} onChange={(e)=>{setCPswd(e.target.value)}} />
         <button onClick={
           ()=>{
+            console.log("suname:", suname);
             if(spswd===cpswd)
-              {navigate("/home")}    
+              {navigate("/home",{state:{signUname:suname}})} 
+            else
+              alert("Password do not match")   
             }
           }>Sign up</button>
         <button type='submit' onClick={
-          ()=>(navigate("/"))
+          ()=>{
+            navigate("/")
+          }
           }>Log in</button>
         </form>
       </div>
