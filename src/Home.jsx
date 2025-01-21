@@ -30,10 +30,10 @@ function Home(){
           element={<DetailPage setBlog={setBlog} blog={blog}/>}
           />
 
-        <Route path="/login"
+        {/* <Route path="/login"
           element={<Login/>}
 
-        />
+        /> */}
       </Routes>
         
         </>

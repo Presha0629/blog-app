@@ -2,13 +2,8 @@ import './App.css'
 import { Route, Routes, useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import Home from './Home';
-import AddBlog from './AddBlog';
-
-
-
 
 function App() {
-
 
 
   return (
@@ -26,10 +21,6 @@ function App() {
         <Route path="/home/*"
           element={<Home/>}
         />
-
-        {/* <Route path='/add'
-          element={<AddBlog/>}
-        /> */}
       </Routes>
       </>
   )
@@ -83,22 +74,34 @@ function Login(){
 
 
 function SignUp(){
-  const navigate=useNavigate();
+    const [suname,setSUname]=useState("");
+    const [spswd,setSPswd]=useState("");
+    const [cpswd,setCPswd]=useState("");
+    const [name, setName]=useState("");
+    const navigate=useNavigate();
+
   return(
     <>
       <div className='signup'>
         <h3>Sign Up Page</h3>
         <form action="">
-        <label htmlFor="UserName">UserName</label>
-        <input type="text" name='UserName' />
+        <label htmlFor="UserName" >UserName</label>
+        <input type="text" name='UserName' value={suname} onChange={(e)=>(setSUname(e.target.value))}/>
         <label htmlFor="Name">Name</label>
-        <input type="text" name='Name' />
+        <input type="text" name='Name' value={name} onChange={(e)=>{setName(e.target.value)}}/>
         <label htmlFor="Password">Password</label>
-        <input type="password" name='Password' />
+        <input type="password" name='Password' value={spswd} onChange={(e)=>(setSPswd(e.target.value))}/>
         <label htmlFor="ConfirmPswd">Confirm Password</label>
-        <input type="password" name='ConfirmPswd' />
-        <button type='submit'>Sign up</button>
-        <button onClick={()=> navigate("/")}>Log in</button>
+        <input type="password" name='ConfirmPswd' value={cpswd} onChange={(e)=>{setCPswd(e.target.value)}} />
+        <button onClick={
+          ()=>{
+            if(spswd===cpswd)
+              {navigate("/home")}    
+            }
+          }>Sign up</button>
+        <button type='submit' onClick={
+          ()=>(navigate("/"))
+          }>Log in</button>
         </form>
       </div>
     </>
