@@ -2,6 +2,8 @@ import './App.css'
 import { Route, Routes, useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import Home from './Home';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './FirebaseConfig';
 
 function App() {
 
@@ -28,14 +30,14 @@ function App() {
 
 
 function Login(){
-  const [uname,setUname]=useState("");
+  const [email,setEmail]=useState("");
   const [pswd,setPswd]=useState("");
   const navigate=useNavigate();
 
-  const credential={
-    Username:"Presha",
-    Password:"Presha"
-  }
+  // const credential={
+  //   Username:"Presha",
+  //   Password:"Presha"
+  // }
   return(
     <>
         <div className='loginpage'>
@@ -44,8 +46,8 @@ function Login(){
         <div className='logindiv'>
           <form action=""  className='loginform' >
             <div className='formlabel'>
-              <input placeholder="Username" type="text" name='UserName' value={uname} onChange={
-                (e)=>(setUname(e.target.value))
+              <input placeholder="Email" type="email" name='email' value={email} onChange={
+                (e)=>(setEmail(e.target.value))
                 } 
                         />
             </div>
@@ -56,9 +58,22 @@ function Login(){
             
             <button type='submit' className='formbutton' onClick=
               {
-                ()=> {
-                  if( uname===credential.Username && pswd===credential.Password)
-                      navigate("/home");
+                async(e)=> {
+                  e.preventDefault();
+                  await signInWithEmailAndPassword(auth, email, pswd)
+                  .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    // ...
+                    console.log(user);
+                  })
+                  .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorMessage);
+                  });
+                  
+                  navigate("/home");
                   
                 }}>Login</button>
             <button className='formbutton' onClick=
@@ -75,7 +90,7 @@ function Login(){
 
 
 function SignUp(){
-    const [suname,setSUname]=useState("");
+    const [semail,setSEmail]=useState("");
     const [spswd,setSPswd]=useState("");
     const [cpswd,setCPswd]=useState("");
     const [name, setName]=useState("");
@@ -86,8 +101,8 @@ function SignUp(){
       <div className='signup'>
         <h3>Sign Up Page</h3>
         <form action="">
-        <label htmlFor="UserName" >UserName</label>
-        <input type="text" name='UserName' value={suname} onChange={(e)=>(setSUname(e.target.value))}/>
+        <label htmlFor="Email" >Email</label>
+        <input type="email" name='email' value={semail} onChange={(e)=>(setSEmail(e.target.value))}/>
         <label htmlFor="Name">Name</label>
         <input type="text" name='Name' value={name} onChange={(e)=>{setName(e.target.value)}}/>
         <label htmlFor="Password">Password</label>
@@ -95,12 +110,18 @@ function SignUp(){
         <label htmlFor="ConfirmPswd">Confirm Password</label>
         <input type="password" name='ConfirmPswd' value={cpswd} onChange={(e)=>{setCPswd(e.target.value)}} />
         <button onClick={
-          ()=>{
-            console.log("suname:", suname);
-            if(spswd===cpswd)
-              {navigate("/home",{state:{signUname:suname}})} 
-            else
-              alert("Password do not match")   
+          async (e)=>{
+            e.preventDefault()
+            await createUserWithEmailAndPassword(auth, semail, spswd)
+            .then((userCredential) => {
+              const user = userCredential.user;
+              console.log(user);
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              console.log(errorMessage);
+            });  
             }
           }>Sign up</button>
         <button type='submit' onClick={
