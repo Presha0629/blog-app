@@ -6,19 +6,24 @@ import AddBlog from './AddBlog'
 import DetailPage from './DetailPage'
 // import SignUp from './App'
 
+
+
 function Home(){
     const [blog,setBlog]=useState([]);
     const navigate=useNavigate();
     const location=useLocation();
-    const {signUname}=location.state || {};
-    console.log(signUname || "No username passed");
+    const{uID}=location.state || {};
+    // const location=useLocation();
+    // const {signUname}=location.state || {};
+    // console.log(signUname || "No username passed");
+   
     return(
         <>
         <div className='main'>
         <span></span>
-        <h3>{signUname}</h3>
+        {/* <h3>{signUname}</h3> */}
         <h1 className='header'>Blog App</h1>
-        <button className='addBlog' onClick={()=>navigate("/home/add")}>Add Blog</button>
+        <button className='addBlog' onClick={()=>navigate("/home/add",{state:{uID:uID}})}>Add Blog</button>
         <button onClick={()=>navigate("/")}>Logout</button>
       </div>
       <Routes>
@@ -27,7 +32,7 @@ function Home(){
           element={<List blog={blog} setBlog={setBlog}/>}/>
 
         <Route path="/add"
-          element={<AddBlog setBlog={setBlog} blog={blog}/>}
+          element={<AddBlog setBlog={setBlog} />}
         />
 
         <Route path="/detail"

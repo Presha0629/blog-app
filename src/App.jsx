@@ -64,8 +64,9 @@ function Login(){
                   .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    // ...
                     console.log(user);
+                    // ...
+                    navigate("/home",{state:{uID:user.uid}});
                   })
                   .catch((error) => {
                     const errorCode = error.code;
@@ -73,7 +74,7 @@ function Login(){
                     console.log(errorMessage);
                   });
                   
-                  navigate("/home");
+                 
                   
                 }}>Login</button>
             <button className='formbutton' onClick=

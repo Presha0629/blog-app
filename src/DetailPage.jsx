@@ -29,6 +29,7 @@ function DetailPage({blog,setBlog}){
         <div className="detailsdiv">
               <div  className="details" key={blogDetails.id}>
                 <h3>{blogDetails.id}. {blogDetails.title}</h3>
+                
                 <p>Author: {blogDetails.author}</p>
                 <p>Date: {blogDetails.date}</p>
                 <p>Content: {blogDetails.content}</p>

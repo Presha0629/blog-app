@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,useLocation} from 'react-router-dom'
 import './App.css';
+import { collection, addDoc } from "firebase/firestore"; 
+import { db } from './FirebaseConfig';
 
 
 function AddBlog({setBlog,blog}){
@@ -9,7 +11,10 @@ function AddBlog({setBlog,blog}){
     const [inputContent,setInputContent]=useState("");
     const [inputTags,setInputTags]=useState("");
     const navigate = useNavigate();
-    
+    const location=useLocation();
+    const{uID}=location.state || {};
+  
+    console.log("debug userID",uID);
   
     return(
         
@@ -32,27 +37,17 @@ function AddBlog({setBlog,blog}){
 
       <br />  
     
-      <button onClick={()=>{
-          let id=0;
-          if(blog.length===0){
-            id=1;
-          }
-          else id=blog[blog.length-1].id+1;
-          const date=new Date();
-          const year = date.getFullYear(); 
-          const month = date.getMonth() + 1; 
-          const day = date.getDate();
-    
+      <button onClick={async()=>{
+
           let newBlog=
-            {
-              "id":id,
+            { 
+              "userId":uID,
               "title":inputTitle,
               "author":inputAuth,
-              "date":`${year}/${month}/${day}`,
               "content":inputContent,
-              "tags":inputTags
+              "tags":inputTags,
+              "date":new Date()
             }
-            console.log("newBlog:", newBlog, "Type:", typeof newBlog);
             if (typeof newBlog === "object" && newBlog !== null) {
               let hasEmptyField = false;
 
@@ -67,10 +62,23 @@ function AddBlog({setBlog,blog}){
                   navigate("/home/add");
                   return;
                 }
-              setBlog([...blog, newBlog]);
-              navigate("/home");
+              // setBlog([...blog, newBlog]);
               
             }
+            try {
+              const docRef = await addDoc(collection(db, "blogs"), 
+              newBlog
+            ).then(()=>
+              navigate("/home")
+                        )
+            // console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+          
+          
+          console.log("newBlog:", newBlog, "Type:", typeof newBlog);
+           
            
       }}>Submit</button>
     
