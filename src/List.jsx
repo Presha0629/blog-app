@@ -1,36 +1,50 @@
 import {useNavigate } from "react-router-dom";
 // import DetailPage from "./DetailPage";
 import './App.css';
-import { collection, getDocs } from "firebase/firestore"; 
-import { useEffect, useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore"; 
+import { useContext, useEffect, useState } from "react";
 import { db } from "./FirebaseConfig";
+import { UserContext } from "./Context";
 
-const listBlogs=async()=>{
-  const querySnapshot = await getDocs(collection(db, "users"));
+const listBlogs=async(user,setBlogs)=>{
+  let blogs=[];
+  // console.log(typeof user.uid);
+  const q = query(collection(db, "blogs"))
+  const querySnapshot = await getDocs(q, where('userId','==',user.uid));
   querySnapshot.forEach((doc) => {
-  console.log(`${doc.id} => ${doc.data()}`);
+    let temp=doc.data();
+    temp=Object.assign(temp,{id:doc.id});
+    blogs.push(temp);
+
+    // blogs.push(doc.data());
+    // console.log(doc);
+    
+    
   });
-
+  // console.log(blogs);
+  setBlogs(blogs);
 }
-function List({ setBlog }) {
-const navigate=useNavigate();
-const [blogs,setBlogs]=useState([]);
 
-useEffect(()=>{
-  const response = listBlogs()
-  console.log("response: ", response)
 
-  }, []);
+function List() {
+  const navigate=useNavigate();
+  const [blogs,setBlogs]=useState([]);
+  const user = useContext(UserContext)
+
+  useEffect(()=>{
+   listBlogs(user,setBlogs)
+  }, 
+  []);
 
 
   return (
     <>
       <div className="list">
         {blogs.map((blg) => (
-          <div className="card" onClick={()=>navigate("/home/detail", {state:{id:blg.id}})} key={blg.id}>
+          <div className="card" onClick={()=>navigate("/home/detail", {state:{blog:blg}})}  key={blg.id}>
             <h3> {blg.title}</h3>
             <h3>{blg.author} </h3>
-            <h3>{`${blg.date.getFullYear()}/${blg.date.getMonth()}/${blg.date.getDate()}`}</h3>
+            {/* <h3>{blg.date}</h3> */}
           </div>
         ))}
       </div>

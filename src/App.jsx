@@ -1,35 +1,41 @@
 import './App.css'
 import { Route, Routes, useNavigate} from 'react-router-dom'
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import Home from './Home';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './FirebaseConfig';
+import { UserContext } from './Context';
+
+
 
 function App() {
+
+  const [user, setUser]=useState({});
 
 
   return (
       <>
+      <UserContext.Provider value={user}>
+        <Routes>
+          <Route path="/" 
+            element={<Login setUser={setUser}/>}
+          />
 
-      <Routes>
-        <Route path="/" 
-          element={<Login/>}
-        />
+          <Route path="/signup"
+            element={<SignUp/>}
+          />
 
-        <Route path="/signup"
-          element={<SignUp/>}
-        />
-
-        <Route path="/home/*"
-          element={<Home/>}
-        />
-      </Routes>
+          <Route path="/home/*"
+            element={<Home/>}
+          />
+        </Routes>
+      </UserContext.Provider>
       </>
   )
 }
 
 
-function Login(){
+function Login({setUser}){
   const [email,setEmail]=useState("");
   const [pswd,setPswd]=useState("");
   const navigate=useNavigate();
@@ -64,7 +70,9 @@ function Login(){
                   .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    console.log(user);
+                    setUser(user);
+                    
+                    // console.log(user);
                     // ...
                     navigate("/home",{state:{uID:user.uid}});
                   })
@@ -122,7 +130,8 @@ function SignUp(){
               const errorCode = error.code;
               const errorMessage = error.message;
               console.log(errorMessage);
-            });  
+            }); 
+            navigate("/"); 
             }
           }>Sign up</button>
         <button type='submit' onClick={

@@ -14,7 +14,7 @@ function AddBlog({setBlog,blog}){
     const location=useLocation();
     const{uID}=location.state || {};
   
-    console.log("debug userID",uID);
+    // console.log("debug userID",uID);
   
     return(
         
@@ -66,7 +66,7 @@ function AddBlog({setBlog,blog}){
               
             }
             try {
-              const docRef = await addDoc(collection(db, "blogs"), 
+              await addDoc(collection(db, "blogs"), 
               newBlog
             ).then(()=>
               navigate("/home")
@@ -77,7 +77,7 @@ function AddBlog({setBlog,blog}){
           }
           
           
-          console.log("newBlog:", newBlog, "Type:", typeof newBlog);
+          // console.log("newBlog:", newBlog, "Type:", typeof newBlog);
            
            
       }}>Submit</button>
