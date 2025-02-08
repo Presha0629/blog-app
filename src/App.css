@@ -88,3 +88,8 @@ button{
 }
 
 
+.uName{
+    border-radius: 15px;
+    background-color: rgb(190, 169, 106);
+    box-shadow: 10px;
+}
