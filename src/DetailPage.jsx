@@ -1,11 +1,15 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {useNavigate,useLocation} from 'react-router-dom'
 import './App.css';
+import { deleteDoc,doc } from "firebase/firestore";
+import { db } from "./FirebaseConfig";
 
 function DetailPage(){
-    const handleDelete=(id)=>{
-        // setBlog((blog)=>blog.filter((b)=>b.id !==id));
-        // navigate('/home')
+    const handleDelete=async(id)=>{
+      await deleteDoc(doc(db, "blogs", id)); // "blogs" is the collection name
+      console.log("Blog deleted successfully");
+
+        navigate('/home')
     };
 
     const navigate = useNavigate();

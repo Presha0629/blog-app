@@ -19,9 +19,9 @@ function Home(){
     // console.log(signUname || "No username passed");
 
     const user=useContext(UserContext);
-    const email=user.email;
-    const splitted=email.split("@");
-    const name=splitted[0];
+    // const email=user.email;
+    // const splitted=email.split("@");
+    // const sname=splitted[0];
 
 
     // console.log("This is for context data:",{name});
@@ -31,7 +31,7 @@ function Home(){
         <div className='main'>
         <span></span>
         {/* <h3>{signUname}</h3> */}
-        <button className='uName'>{name}</button>
+        {/* <button className='uName'>{sname}</button> */}
         <h1 className='header'>Blog App</h1>
         <button className='addBlog' onClick={()=>navigate("/home/add",{state:{uID:uID}})}>Add Blog</button>
         <button onClick={()=>navigate("/")}>Logout</button>
