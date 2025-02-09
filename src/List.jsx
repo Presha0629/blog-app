@@ -2,15 +2,16 @@ import {useNavigate } from "react-router-dom";
 // import DetailPage from "./DetailPage";
 import './App.css';
 import { collection, getDocs, query, where } from "firebase/firestore"; 
-import { useContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { db } from "./FirebaseConfig";
-import { UserContext } from "./Context";
+// import { UserContext } from "./Context";
 
-const listBlogs=async(user,setBlogs)=>{
+const listBlogs=async(setBlogs)=>{
   let blogs=[];
+  let userId=localStorage.getItem("uID");
   // console.log(typeof user.uid);
   const q = query(collection(db, "blogs"))
-  const querySnapshot = await getDocs(q, where('userId','==',user.uid));
+  const querySnapshot = await getDocs(q, where('userId','==',userId));
   querySnapshot.forEach((doc) => {
     let temp=doc.data();
     temp=Object.assign(temp,{id:doc.id});
@@ -29,10 +30,10 @@ const listBlogs=async(user,setBlogs)=>{
 function List() {
   const navigate=useNavigate();
   const [blogs,setBlogs]=useState([]);
-  const user = useContext(UserContext)
+  // const user = useContext(UserContext)
 
   useEffect(()=>{
-   listBlogs(user,setBlogs)
+   listBlogs(setBlogs)
   }, 
   []);
 

@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react'
+import {useState } from 'react'
 import './App.css'
-import { Route, Routes, useNavigate,useLocation} from 'react-router-dom'
+import { Route, Routes, useNavigate} from 'react-router-dom'
 import List from './List'
 import AddBlog from './AddBlog'
 import DetailPage from './DetailPage'
-import { UserContext } from './Context'
+// import { UserContext } from './Context'
 // import SignUp from './App'
 
 
@@ -12,13 +12,13 @@ import { UserContext } from './Context'
 function Home(){
     const [blog,setBlog]=useState([]);
     const navigate=useNavigate();
-    const location=useLocation();
-    const{uID}=location.state || {};
+    // const location=useLocation();
+    // const{uID}=location.state || {};
     // const location=useLocation();
     // const {signUname}=location.state || {};
     // console.log(signUname || "No username passed");
 
-    const user=useContext(UserContext);
+    // const user=useContext(UserContext);
     // const email=user.email;
     // const splitted=email.split("@");
     // const sname=splitted[0];
@@ -33,7 +33,7 @@ function Home(){
         {/* <h3>{signUname}</h3> */}
         {/* <button className='uName'>{sname}</button> */}
         <h1 className='header'>Blog App</h1>
-        <button className='addBlog' onClick={()=>navigate("/home/add",{state:{uID:uID}})}>Add Blog</button>
+        <button className='addBlog' onClick={()=>navigate("/home/add")}>Add Blog</button>
         <button onClick={()=>navigate("/")}>Logout</button>
       </div>
       <Routes>

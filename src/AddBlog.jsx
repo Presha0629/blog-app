@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {useNavigate,useLocation} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import './App.css';
 import { collection, addDoc } from "firebase/firestore"; 
 import { db } from './FirebaseConfig';
@@ -11,8 +11,8 @@ function AddBlog({setBlog,blog}){
     const [inputContent,setInputContent]=useState("");
     const [inputTags,setInputTags]=useState("");
     const navigate = useNavigate();
-    const location=useLocation();
-    const{uID}=location.state || {};
+    // const location=useLocation();
+    // const{uID}=location.state || {};
   
     // console.log("debug userID",uID);
   
@@ -38,6 +38,7 @@ function AddBlog({setBlog,blog}){
       <br />  
     
       <button onClick={async()=>{
+        let uID=localStorage.getItem("uID");
 
           let newBlog=
             { 

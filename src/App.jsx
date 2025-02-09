@@ -1,10 +1,10 @@
 import './App.css'
 import { Route, Routes, useNavigate} from 'react-router-dom'
-import { createContext, useState } from 'react';
+import {useState } from 'react';
 import Home from './Home';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './FirebaseConfig';
-import { UserContext } from './Context';
+// import { UserContext } from './Context';
 
 
 
@@ -15,7 +15,7 @@ function App() {
 
   return (
       <>
-      <UserContext.Provider value={user}>
+      
         <Routes>
           <Route path="/" 
             element={<Login setUser={setUser}/>}
@@ -29,7 +29,6 @@ function App() {
             element={<Home/>}
           />
         </Routes>
-      </UserContext.Provider>
       </>
   )
 }
@@ -72,9 +71,13 @@ function Login({setUser}){
                     const user = userCredential.user;
                     setUser(user);
                     
-                    // console.log(user);
+                    // console.log("autheti check",user);
+                    localStorage.setItem("token",user.accessToken);
+                    localStorage.setItem("email",user.email);
+                    localStorage.setItem("uID",user.uid);
                     // ...
-                    navigate("/home",{state:{uID:user.uid}});
+                    // navigate("/home",{state:{uID:user.uid}});
+                    navigate("/home");
                   })
                   .catch((error) => {
                     const errorCode = error.code;
